@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Verification</title>
+</head>
+<style>
+    body {
+            font-family: "Gabarito", sans-serif;
+            background-color: grey;
+            display: flex;
+            justify-content: center;
+            margin: 60px;
+            align-items: center;
+        }
+    .form-container
+    {
+        background-color:  black;
+        color: white;
+        border-radius: 10px;
+        padding: 10px 20px 30px 40px;
+        box-shadow: 0px 4px 30px rgba(0, 0, 0, 2);
+        height: 470px;
+        width: 500px;
+        margin: 20px;
+    }
+    .passwordForm{
+        margin:  5px 100px;
+    }
+    .error {
+    color: red;
+    margin-top: 10px;
+    }
+</style>
+<body>
+    <div class="form-container">
+        <h2 style="margin-left: 80px; font-weight: 900; display: inline-block;">Password Verification</h2>
+        <form class="passwordForm">
+            <label style="font-style: italic; font-weight: bold;">Username</label><br>
+            <input type="text" id="username" style="height: 30px; width: 250px; margin-top: 5px; border-color: blueviolet;" placeholder="Enter your name"><br>
+            <div id="error-message-name" class="error"></div><br>
+
+            <label style="font-style: italic; font-weight: bold;">Password</label><br>
+            <input type="password" id="password" style="height: 30px; width: 250px; margin-top: 5px; border-color: blueviolet;" placeholder="Enter the password"><br>
+            <div id="error-message-password" class="error"></div><br>
+
+            <label style="font-style: italic; font-weight: bold;">Re-type Password</label><br>
+            <input type="password" id="confirmPassword" style="height: 30px; width: 250px; margin-top: 5px; border-color: blueviolet;" placeholder="Re-enter the password"><br><br>
+
+            <button type="button" style="margin-left: 100px; padding: 10px 15px; background-color: blueviolet; border-radius: 5px; " onclick="validatepassword(event)">Submit</button>
+            <div id="error-message" class="error"></div>
+        </form>
+    </div>
+    <script>
+        function validatepassword(event) 
+        {
+            var name = document.getElementById("username").value
+            var password = document.getElementById("password").value
+            var confirmPassword = document.getElementById("confirmPassword").value
+            var errorMessage_name = document.getElementById("error-message-name");
+            var errorMessage_password = document.getElementById("error-message-password");
+            var errorMessage = document.getElementById("error-message");
+
+            let isValid = true
+
+            /* Name validation */
+            var name_regex = /^[a-zA-Z]+$/
+            if(name == "")
+            {
+                errorMessage_name.textContent = "Name is required."
+                isValid = false
+            }
+            else if(!name_regex.test(name))
+            {
+                errorMessage_name.textContent = "Name should contain only letters."
+                isValid = false
+            }
+            else{
+                errorMessage_name.textContent = ''
+            }
+
+            /* Password validation */
+            var password_regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{6,}$/
+            if(password == "")
+            {
+                errorMessage_password.textContent = "Password is required."
+                isValid = false
+            }
+            else if(!password_regex.test(password))
+            {
+                errorMessage_password.textContent = "Password  must contain at least 6 characters, including upper and lower case letters, and at least one number."
+                isValid = false
+            }
+            else{
+                errorMessage_password.textContent = ''
+            }
+
+            /* Re type Password validation */
+            if (password != confirmPassword) 
+            {
+                errorMessage.textContent = "Passwords do not match. Please try again."
+                isValid = false
+            } 
+            else 
+            {
+                errorMessage.textContent = ''
+            }
+
+            if(isValid)
+            {
+                alert("Form submitted Successfully!");
+                // Reset the form
+                document.getElementById("passwordForm").reset();
+            }
+        }
+    </script>
+</body>
+</html>
+
